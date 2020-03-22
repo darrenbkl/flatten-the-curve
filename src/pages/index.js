@@ -60,6 +60,17 @@ const BlogIndex = ({ data }) => {
       </Paragraph>
       <Paragraph>This is a community project.</Paragraph>
 
+      <div type="hidden" style={{ display: 'none' }}>
+        <form name="addCompanyForm" method="post" data-netlify="true" data-netlify-honeypot="botField" >
+            <input type="hidden" name="botField" />
+            <input type="hidden" name="form-name" value="addCompanyForm" />
+            <input id="name" type="text" name="company" required />
+            <input id="policy" type="text" name="policy" required />
+            <input id="other" type="text" name="other" required />
+          <input type="submit" value="submit" />
+        </form>
+      </div>
+
       <Button
         variant="outlined"
         color="primary"
