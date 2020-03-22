@@ -39,7 +39,8 @@ const FormDialog = props => {
   const [policy, setPolicy] = React.useState("WFH");
   const [company, setCompany] = React.useState("");
   const [other, setOther] = React.useState("");
-
+  const [botField, setBotField] = React.useState("");
+  
   const handlePolicyChange = event => {
     setPolicy(event.target.value);
   };
@@ -52,9 +53,13 @@ const FormDialog = props => {
     setOther(e.target.value);
   };
 
+  const handleBotFieldChange = e => {
+    setBotField(e.target.value);
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
-    props.handleSubmit(company, policy, other);
+    props.handleSubmit(company, policy, other, botField);
   };
 
   return (
@@ -72,9 +77,16 @@ const FormDialog = props => {
           noValidate
           autoComplete="off"
           data-netlify="true"
-          data-netlify-honeypot="bot-field"
+          data-netlify-honeypot="botField"
         >
           <DialogContent>
+            <input type="hidden" name="form-name" value="addCompanyForm" />
+            <p hidden>
+              <label>
+                Honey Pot Field:{" "}
+                <input name="botField" onChange={handleBotFieldChange} />
+              </label>
+            </p>
             <TextField
               margin="dense"
               id="company"
@@ -85,7 +97,7 @@ const FormDialog = props => {
             />
 
             <TextField
-              id="standard-select-currency"
+              id="standard-select-policy"
               select
               label="Select"
               value={policy}

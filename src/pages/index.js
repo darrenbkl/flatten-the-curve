@@ -34,15 +34,16 @@ const BlogIndex = ({ data }) => {
   const handleClick = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
-  const handleSubmit = (company, policy, other) => {
+  const handleSubmit = (company, policy, other, botField) => {
     fetch("/", {
       method: "POST",
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: encode({
         "form-name": "addCompanyForm",
-        "company": company,
-        "policy": policy,
-        "other": other
+        company: company,
+        policy: policy,
+        other: other,
+        botField: botField
       })
     })
       .then(() => {
