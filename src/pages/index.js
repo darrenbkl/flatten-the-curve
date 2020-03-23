@@ -47,8 +47,6 @@ const BlogIndex = ({ data }) => {
   const formName = "addCompanyForm";
 
   const handleSubmit = () => {
-    console.log(state);
-
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
