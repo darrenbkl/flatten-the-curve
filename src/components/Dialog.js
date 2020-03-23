@@ -36,30 +36,10 @@ const useStyles = makeStyles(theme => ({
 
 const FormDialog = props => {
   const classes = useStyles();
-  const [policy, setPolicy] = React.useState("WFH");
-  const [company, setCompany] = React.useState("");
-  const [other, setOther] = React.useState("");
-  const [botField, setBotField] = React.useState("");
-  
-  const handlePolicyChange = event => {
-    setPolicy(event.target.value);
-  };
-
-  const handleCompanyChange = e => {
-    setCompany(e.target.value);
-  };
-
-  const handleOtherChange = e => {
-    setOther(e.target.value);
-  };
-
-  const handleBotFieldChange = e => {
-    setBotField(e.target.value);
-  };
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.handleSubmit(company, policy, other, botField);
+    props.handleSubmit();
   };
 
   return (
@@ -72,7 +52,7 @@ const FormDialog = props => {
         <DialogTitle id="form-dialog-title">Tell me more</DialogTitle>
         <form
           id="myFormId"
-          name="addCompanyForm"
+          name={props.formName}
           className={classes.root}
           noValidate
           autoComplete="off"
@@ -84,24 +64,26 @@ const FormDialog = props => {
             <p hidden>
               <label>
                 Honey Pot Field:{" "}
-                <input name="botField" onChange={handleBotFieldChange} />
+                <input name="botField" onChange={props.handleChange} />
               </label>
             </p>
             <TextField
               margin="dense"
               id="company"
               label="Company Name"
+              name="companyName"
               fullWidth
-              onChange={handleCompanyChange}
+              onChange={props.handleChange}
               required={true}
             />
 
             <TextField
               id="standard-select-policy"
               select
-              label="Select"
-              value={policy}
-              onChange={handlePolicyChange}
+              label="Policy"
+              name="policy"
+              value={props.state.policy}
+              onChange={props.handleChange}
               helperText="Select your company policy"
             >
               {policies.map(option => (
@@ -111,14 +93,15 @@ const FormDialog = props => {
               ))}
             </TextField>
 
-            {policy === "Other" ? (
+            {props.state.policy === "Other" ? (
               <TextField
                 margin="dense"
                 id="other"
                 label="Indicate others"
+                name="other"
                 fullWidth
                 required={true}
-                onChange={handleOtherChange}
+                onChange={props.handleChange}
               />
             ) : (
               <div />

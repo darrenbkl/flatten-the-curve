@@ -25,28 +25,40 @@ const encode = data => {
     .join("&");
 };
 
+const initalState = { policy: "WFH" };
+
 const BlogIndex = ({ data }) => {
   const classes = useStyles();
   const [showModal, setShowModal] = useState(false);
+  const [state, setState] = React.useState(initalState);
+
+  const handleChange = e => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
 
   const rows = data.allGoogleSheetWfhRow.edges;
 
   const handleClick = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
+  const handleClose = () => {
+    setState(initalState);
+    setShowModal(false);
+  };
 
-  const handleSubmit = (company, policy, other, botField) => {
+  const formName = "addCompanyForm";
+
+  const handleSubmit = () => {
+    console.log(state);
+
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: encode({
-        "form-name": "addCompanyForm",
-        company: company,
-        policy: policy,
-        other: other,
-        botField: botField
+        "form-name": formName,
+        ...state
       })
     })
       .then(() => {
+        setState(initalState);
         setShowModal(false);
       })
       .catch(error => alert(error));
@@ -60,13 +72,18 @@ const BlogIndex = ({ data }) => {
       </Paragraph>
       <Paragraph>This is a community project.</Paragraph>
 
-      <div type="hidden" style={{ display: 'none' }}>
-        <form name="addCompanyForm" method="post" data-netlify="true" data-netlify-honeypot="botField" >
-            <input type="hidden" name="botField" />
-            <input type="hidden" name="form-name" value="addCompanyForm" />
-            <input id="name" type="text" name="company" required />
-            <input id="policy" type="text" name="policy" required />
-            <input id="other" type="text" name="other" required />
+      <div type="hidden" style={{ display: "none" }}>
+        <form
+          name="addCompanyForm"
+          method="post"
+          data-netlify="true"
+          data-netlify-honeypot="botField"
+        >
+          <input type="hidden" name="botField" />
+          <input type="hidden" name="form-name" value="addCompanyForm" />
+          <input id="name" type="text" name="company" required />
+          <input id="policy" type="text" name="policy" required />
+          <input id="other" type="text" name="other" required />
           <input type="submit" value="submit" />
         </form>
       </div>
@@ -82,7 +99,9 @@ const BlogIndex = ({ data }) => {
       </Button>
 
       <FormDialog
-        handleClick={handleClick}
+        formName={formName}
+        state={state}
+        handleChange={handleChange}
         handleClose={handleClose}
         handleSubmit={handleSubmit}
         showModal={showModal}
