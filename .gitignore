@@ -1,4 +1,5 @@
 google-credentials.json
+.env**
 
 # Logs
 logs
