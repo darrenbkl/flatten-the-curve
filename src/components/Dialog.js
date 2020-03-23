@@ -71,7 +71,7 @@ const FormDialog = props => {
               margin="dense"
               id="company"
               label="Company Name"
-              name="companyName"
+              name="company"
               fullWidth
               onChange={props.handleChange}
               required={true}
