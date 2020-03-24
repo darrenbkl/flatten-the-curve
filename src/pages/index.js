@@ -1,12 +1,15 @@
+import Button from "@material-ui/core/Button";
+import Icon from "@material-ui/core/Icon";
+import IconButton from "@material-ui/core/IconButton";
+import Snackbar from "@material-ui/core/Snackbar";
+import { makeStyles } from "@material-ui/core/styles";
+import CloseIcon from "@material-ui/icons/Close";
 import { graphql } from "gatsby";
 import React, { useState } from "react";
 import FormDialog from "../components/Dialog";
 import Table from "../components/Table";
 import Layout from "../layout/Layout";
 import Paragraph from "../layout/paragraph";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Icon from "@material-ui/core/Icon";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,15 +28,20 @@ const encode = data => {
     .join("&");
 };
 
-const initalState = { policy: "WFH" };
+const initalState = { company: "", policy: "WFH", other: "" };
 
 const BlogIndex = ({ data }) => {
   const classes = useStyles();
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = React.useState(initalState);
+  const [showSnackbar, setShowSnackbar] = React.useState(false);
 
   const handleChange = e => {
-    setState({ ...state, [e.target.name]: e.target.value });
+    if (e.target.name === "policy") {
+      setState({ ...state, [e.target.name]: e.target.value, other: "" });
+    } else {
+      setState({ ...state, [e.target.name]: e.target.value });
+    }
   };
 
   const rows = data.allGoogleSheetWfhRow.edges;
@@ -58,6 +66,7 @@ const BlogIndex = ({ data }) => {
       .then(() => {
         setState(initalState);
         setShowModal(false);
+        setShowSnackbar(true);
       })
       .catch(error => alert(error));
   };
@@ -103,6 +112,29 @@ const BlogIndex = ({ data }) => {
         handleClose={handleClose}
         handleSubmit={handleSubmit}
         showModal={showModal}
+      />
+
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left"
+        }}
+        open={showSnackbar}
+        autoHideDuration={5000}
+        onClose={() => setShowSnackbar(false)}
+        message="Got it, thanks!"
+        action={
+          <React.Fragment>
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={() => setShowSnackbar(false)}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
       />
 
       <Table data={rows} />
