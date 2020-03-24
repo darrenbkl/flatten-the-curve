@@ -14,7 +14,7 @@ module.exports = {
                 variants: ["300", "400", "500"]
               },
               {
-                family: "Source Serif Pro",
+                family: "Open Sans",
                 variants: ["400", "600", "700"]
               }
             ]

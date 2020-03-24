@@ -4,9 +4,9 @@ const theme = createMuiTheme({
   typography: {
     h4: {
       fontFamily: ["Montserrat", "sans-serif"].join(","),
-      fontWeight: 500
+      fontWeight: 500,
     },
-    fontFamily: ["Source Serif Pro", "serif"].join(","),
+    fontFamily: ["Open Sans", "sans-serif"].join(","),
     fontSize: 16,
   },
 
