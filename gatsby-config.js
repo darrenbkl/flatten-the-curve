@@ -1,3 +1,9 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`
+});
+
+const config = require("gatsby-plugin-config").default;
+
 module.exports = {
   siteMetadata: {
     title: `Flatten the Curve`
@@ -34,11 +40,8 @@ module.exports = {
         spreadsheetId: "1G-cp5XamvC38FbCM4u33JTZFCWkFtP_dcw51CeQKg68",
         worksheetTitle: "wfh",
         credentials: {
-          client_email: process.env.GATSBY_GOOGLE_CLIENT_EMAIL,
-          private_key: process.env.GATSBY_GOOGLE_PRIVATE_KEY.replace(
-            /\\n/g,
-            "\n"
-          )
+          client_email: config.GATSBY_GOOGLE_CLIENT_EMAIL,
+          private_key: config.GATSBY_GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n")
         }
       }
     },
