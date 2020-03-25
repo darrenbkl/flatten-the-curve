@@ -6,7 +6,8 @@ const config = require("gatsby-plugin-config").default;
 
 module.exports = {
   siteMetadata: {
-    title: `Flatten the Curve`
+    title: `Flatten the Curve`,
+    github: `https://github.com/darrenbkl/flatten-the-curve`
   },
   plugins: [
     {

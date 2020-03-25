@@ -1,11 +1,11 @@
+import React, { useState } from "react";
+import { graphql } from "gatsby";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
 import Snackbar from "@material-ui/core/Snackbar";
 import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
-import { graphql } from "gatsby";
-import React, { useState } from "react";
 import FormDialog from "../components/Dialog";
 import Table from "../components/Table";
 import Layout from "../layout/Layout";
@@ -72,7 +72,7 @@ const BlogIndex = ({ data }) => {
   };
 
   return (
-    <Layout buildTime={data.site.buildTime}>
+    <Layout>
       <Paragraph>
         List of companies in Singapore that enforces social distancing and work
         from home policy.
@@ -146,9 +146,6 @@ export default BlogIndex;
 
 export const query = graphql`
   query {
-    site {
-      buildTime
-    }
     allGoogleSheetWfhRow {
       edges {
         node {
